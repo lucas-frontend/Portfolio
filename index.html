@@ -28,9 +28,22 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <title>Lucas Benítez | Frontend & Full Stack Developer</title>
-  </head>
+  <script id="refresh-to-top">
+  if (performance.getEntriesByType("navigation")[0]?.type === "reload") {
+    history.scrollRestoration = "manual";
+    history.replaceState(history.state, "", location.pathname + location.search);
+
+    window.addEventListener("load", () => {
+      document.documentElement.style.scrollBehavior = "auto";
+      window.scrollTo(0, 0);
+      document.documentElement.style.scrollBehavior = "";
+    }, { once: true });
+  }
+</script>
+</head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
+

@@ -1,0 +1,434 @@
+.cf-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(10, 18, 28, .70);
+  backdrop-filter: blur(10px);
+}
+
+.cf-panel {
+  --bg: #ffffff;
+  --stage: #eef2f6;
+  --text: #1b2a3d;
+  --muted: #728094;
+  --border: #e0e6ed;
+  --button: rgba(255,255,255,.9);
+  --accent: #368c81;
+
+  width: min(1200px,100%);
+  max-height: calc(100dvh - 32px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--bg);
+  color: var(--text);
+  box-shadow: 0 30px 90px rgba(0,0,0,.22);
+}
+
+:root[data-theme="dark"] .cf-panel {
+  --bg: #121c2b;
+  --stage: #0c1625;
+  --text: #f4f7fb;
+  --muted: #9cacc0;
+  --border: rgba(255,255,255,.12);
+  --button: rgba(36,51,72,.92);
+  --accent: #68d5c5;
+}
+
+.cf-header,
+.cf-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 24px;
+}
+
+.cf-header span,
+.cf-footer span {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.cf-header button {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--button);
+  color: var(--text);
+  font-size: 23px;
+  cursor: pointer;
+}
+
+.cf-stage {
+  position: relative;
+  height: min(60dvh,610px);
+  min-height: 0;
+  flex-shrink: 1;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at center, rgba(255,255,255,.55) 0%, rgba(255,255,255,.08) 42%, rgba(0,0,0,0) 64%),
+    var(--stage);
+  perspective: 1400px;
+  isolation: isolate;
+  user-select: none;
+}
+
+:root[data-theme="dark"] .cf-stage {
+  background:
+    radial-gradient(circle at center, rgba(255,255,255,.18) 0%, rgba(255,255,255,.05) 28%, rgba(0,0,0,0) 58%),
+    var(--stage);
+}
+
+.cf-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at center, rgba(255,255,255,0) 28%, rgba(30,45,62,.14) 62%, rgba(30,45,62,.24) 100%);
+}
+
+:root[data-theme="dark"] .cf-stage::before {
+  background:
+    radial-gradient(circle at center, rgba(0,0,0,0) 24%, rgba(2,8,15,.28) 58%, rgba(2,8,15,.54) 100%);
+}
+
+.cf-stage::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 7%;
+  width: 44%;
+  height: 10%;
+  transform: translateX(-50%);
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(54,140,129,.18) 0%, rgba(54,140,129,0) 72%);
+  filter: blur(22px);
+}
+
+:root[data-theme="dark"] .cf-stage::after {
+  background: radial-gradient(circle, rgba(104,213,197,.18) 0%, rgba(104,213,197,0) 72%);
+}
+
+.cf-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(68%,790px);
+  aspect-ratio: 16 / 9;
+  max-height: calc(100% - 30px);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 22px 50px rgba(0,0,0,.18);
+  pointer-events: none;
+  backface-visibility: hidden;
+  transform-origin: center;
+  transition:
+    transform .5s cubic-bezier(.22,.75,.22,1),
+    opacity .45s ease,
+    filter .45s ease,
+    visibility .45s;
+  z-index: 2;
+}
+
+:root[data-theme="dark"] .cf-card {
+  box-shadow: 0 22px 50px rgba(0,0,0,.35);
+}
+
+.cf-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.cf-card[data-pos="0"] {
+  transform: translate(-50%,-50%) scale(1);
+  opacity: 1;
+  filter: brightness(1.02) blur(0);
+  box-shadow: 0 26px 60px rgba(0,0,0,.18);
+}
+
+:root[data-theme="dark"] .cf-card[data-pos="0"] {
+  box-shadow: 0 26px 60px rgba(0,0,0,.45);
+}
+
+.cf-card[data-pos="-1"] {
+  transform: translate(-50%,-50%) translateX(-60%) rotateY(28deg) scale(.60);
+  opacity: .42;
+  filter: brightness(.82) blur(2px);
+}
+
+.cf-card[data-pos="1"] {
+  transform: translate(-50%,-50%) translateX(60%) rotateY(-28deg) scale(.60);
+  opacity: .42;
+  filter: brightness(.82) blur(2px);
+}
+
+.cf-card[data-pos="-2"] {
+  transform: translate(-50%,-50%) translateX(-94%) rotateY(40deg) scale(.36);
+  opacity: .16;
+  filter: brightness(.72) blur(4px);
+}
+
+.cf-card[data-pos="2"] {
+  transform: translate(-50%,-50%) translateX(94%) rotateY(-40deg) scale(.36);
+  opacity: .16;
+  filter: brightness(.72) blur(4px);
+}
+
+.cf-card[data-pos="hidden"] {
+  transform: translate(-50%,-50%) scale(.25);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.cf-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 30;
+  width: 44px;
+  height: 44px;
+  transform: translateY(-50%);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--button);
+  color: var(--text);
+  box-shadow: 0 5px 18px rgba(0,0,0,.12);
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.cf-stage .cf-arrow,
+.cf-stage .cf-arrow:hover,
+.cf-stage .cf-arrow:active,
+.cf-stage .cf-arrow:focus-visible {
+  transform: translateY(-50%) !important;
+  translate: 0 0 !important;
+  scale: 1 !important;
+}
+
+.cf-prev { left: 18px; }
+.cf-next { right: 18px; }
+
+.cf-dots {
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+  padding: 15px;
+  background: var(--stage);
+}
+
+.cf-dots button {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--muted);
+  opacity: .45;
+  cursor: pointer;
+}
+
+.cf-dots button[aria-current="true"] {
+  background: var(--accent);
+  opacity: 1;
+}
+
+.cf-footer {
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.cf-footer div {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.cf-footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.cf-panel button:focus-visible,
+.cf-panel a:focus-visible,
+.cf-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.cf-card[data-pos="0"] {
+  pointer-events: auto;
+  cursor: zoom-in;
+}
+
+.cf-zoom-hint {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.cf-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 35px;
+  background: rgba(8,15,25,.96);
+}
+
+:root[data-theme="light"] .cf-fullscreen {
+  background: rgba(245,247,250,.98);
+}
+
+.cf-fullscreen img {
+  display: block;
+  max-width: 95vw;
+  max-height: 88dvh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.18);
+}
+
+.cf-fullscreen-close {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  z-index: 101;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--button);
+  color: var(--text);
+  font-size: 27px;
+  cursor: pointer;
+}
+
+@media(max-width:600px) {
+  .cf-backdrop { padding: 8px; }
+  .cf-panel { border-radius: 14px; }
+  .cf-stage { height: min(48dvh,420px); }
+  .cf-card { width: 78%; border-radius: 8px; }
+  .cf-header, .cf-footer { padding: 12px 14px; }
+  .cf-arrow { width: 34px; height: 34px; font-size: 25px; }
+  .cf-prev { left: 6px; }
+  .cf-next { right: 6px; }
+  .cf-footer { font-size: 11px; }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .cf-card { transition: none; }
+}
+/* COVERFLOW OPTION 3 - GLASS */
+
+/* Cristal y desenfoque exterior */
+.cf-backdrop {
+  backdrop-filter: blur(16px) saturate(125%);
+}
+
+:root[data-theme="light"] .cf-panel {
+  background: rgba(250,252,255,.92);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 35px 100px rgba(40,60,90,.18);
+}
+
+:root[data-theme="dark"] .cf-panel {
+  background: rgba(17,27,42,.92);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 35px 100px rgba(0,0,0,.45);
+}
+
+/* Fondo de profundidad */
+:root[data-theme="light"] .cf-stage {
+  background:
+    radial-gradient(ellipse at 50% 75%,rgba(85,180,180,.16),transparent 48%),
+    linear-gradient(135deg,#f0f4fb,#e8eef7 55%,#f4f7fb);
+}
+
+:root[data-theme="dark"] .cf-stage {
+  background:
+    radial-gradient(ellipse at 50% 75%,rgba(40,150,160,.16),transparent 48%),
+    linear-gradient(135deg,#142236,#0d1727 55%,#19263a);
+}
+
+/* Reflejos de cristal */
+.cf-stage::before {
+  background:
+    radial-gradient(ellipse at 15% 15%,rgba(255,255,255,.45),transparent 45%),
+    radial-gradient(ellipse at 85% 80%,rgba(130,180,210,.14),transparent 50%);
+}
+
+.cf-stage::after {
+  bottom: 5%;
+  width: 65%;
+  height: 17%;
+  background: radial-gradient(
+    ellipse,
+    rgba(60,180,165,.25),
+    transparent 70%
+  );
+  filter: blur(25px);
+}
+
+/* Imagen principal destacada */
+.cf-card[data-pos="0"] {
+  filter: none;
+  box-shadow:
+    0 30px 70px rgba(20,40,60,.22),
+    0 0 0 1px rgba(255,255,255,.7);
+}
+
+:root[data-theme="dark"] .cf-card[data-pos="0"] {
+  box-shadow:
+    0 30px 75px rgba(0,0,0,.48),
+    0 0 0 1px rgba(255,255,255,.16);
+}
+
+/* Imágenes secundarias */
+.cf-card[data-pos="-1"],
+.cf-card[data-pos="1"] {
+  opacity: .48;
+  filter: brightness(.94) blur(2.5px);
+}
+
+.cf-card[data-pos="-2"],
+.cf-card[data-pos="2"] {
+  opacity: .20;
+  filter: brightness(.8) blur(5px);
+}
+
+/* Cabecera y pie suaves */
+.cf-header,
+.cf-footer {
+  background: rgba(255,255,255,.08);
+}
+
+/* FIX: eliminar imágenes fantasma durante la rotación */
+.cf-card[data-pos="-2"],
+.cf-card[data-pos="2"],
+.cf-card[data-pos="hidden"] {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transition: none !important;
+}
+

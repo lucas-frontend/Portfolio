@@ -8,7 +8,7 @@ function MonasterPreview() {
   return (
     <div className="preview-window">
       <img
-        src="/projects/monaster/portada.png"
+        src="/projects/monaster/portada.webp"
         alt="Cronograma real de Monaster"
         style={{
           width: "100%",
@@ -197,4 +197,5 @@ function ProjectCard({
 }
 
 export default ProjectCard;
+
 

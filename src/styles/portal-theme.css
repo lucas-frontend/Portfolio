@@ -1160,3 +1160,21 @@ a:hover,
     transition: none !important;
   }
 }
+
+/* Ajuste correcto de portadas de proyectos */
+.project-card .monaster-gallery-trigger img,
+.project-card .haloclock-gallery-trigger img {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+}
+
+/* Quitar tono amarillento de la portada de Monaster */
+.project-card .monaster-gallery-trigger img {
+  filter: brightness(1.01) contrast(1.03) saturate(1.02) hue-rotate(6deg);
+}
+
+
